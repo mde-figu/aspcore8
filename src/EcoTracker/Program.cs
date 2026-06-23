@@ -101,12 +101,9 @@ var app = builder.Build();
 // --- Middleware ---
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
-// --- Swagger (dev) ---
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "EcoTracker API v1"));
-}
+// --- Swagger ---
+app.UseSwagger();
+app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "EcoTracker API v1"));
 
 app.UseHttpsRedirection();
 

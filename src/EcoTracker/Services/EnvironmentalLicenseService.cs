@@ -54,7 +54,7 @@ public class EnvironmentalLicenseService : IEnvironmentalLicenseService
         var thresholdDate = DateTime.UtcNow.AddDays(daysThreshold);
         return await _context.EnvironmentalLicenses
             .AsNoTracking()
-            .Where(e => e.Status == "Active" && e.ExpirationDate <= thresholdDate)
+            .Where(e => e.Status == "Active" && e.ExpirationDate >= DateTime.UtcNow && e.ExpirationDate <= thresholdDate)
             .OrderBy(e => e.ExpirationDate)
             .Select(e => MapToResponse(e))
             .ToListAsync();
