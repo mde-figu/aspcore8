@@ -1,0 +1,389 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2024-06-22T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2024.1.0",
+  "resources": [
+    {
+      "_id": "wrk_ecotracker",
+      "parentId": null,
+      "_type": "workspace",
+      "name": "EcoTracker API - ESG Compliance",
+      "description": "API RESTful para Governança e Compliance Ambiental (Tema 4 ESG)"
+    },
+    {
+      "_id": "env_base",
+      "parentId": "wrk_ecotracker",
+      "_type": "environment",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:5000",
+        "token": ""
+      }
+    },
+    {
+      "_id": "fld_auth",
+      "parentId": "wrk_ecotracker",
+      "_type": "request_group",
+      "name": "Auth"
+    },
+    {
+      "_id": "req_login_admin",
+      "parentId": "fld_auth",
+      "_type": "request",
+      "name": "Login (Admin)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/Auth/login",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"username\": \"admin\",\n  \"password\": \"Admin@123\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "req_login_auditor",
+      "parentId": "fld_auth",
+      "_type": "request",
+      "name": "Login (Auditor)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/Auth/login",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"username\": \"auditor\",\n  \"password\": \"Auditor@123\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "req_login_viewer",
+      "parentId": "fld_auth",
+      "_type": "request",
+      "name": "Login (Viewer)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/Auth/login",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"username\": \"viewer\",\n  \"password\": \"Viewer@123\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "fld_carbon",
+      "parentId": "wrk_ecotracker",
+      "_type": "request_group",
+      "name": "Carbon Emissions"
+    },
+    {
+      "_id": "req_carbon_list",
+      "parentId": "fld_carbon",
+      "_type": "request",
+      "name": "Listar Emissões (com paginação)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/CarbonEmissions?page=1&pageSize=10",
+      "headers": []
+    },
+    {
+      "_id": "req_carbon_list_filter",
+      "parentId": "fld_carbon",
+      "_type": "request",
+      "name": "Listar Emissões (com filtros)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/CarbonEmissions?sector=Energia&year=2024&page=1&pageSize=10",
+      "headers": []
+    },
+    {
+      "_id": "req_carbon_get",
+      "parentId": "fld_carbon",
+      "_type": "request",
+      "name": "Obter Emissão por ID",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/CarbonEmissions/1",
+      "headers": []
+    },
+    {
+      "_id": "req_carbon_create",
+      "parentId": "fld_carbon",
+      "_type": "request",
+      "name": "Criar Emissão (Auth)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/CarbonEmissions",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"companyName\": \"Nova Empresa SA\",\n  \"sector\": \"Industrial\",\n  \"emissionTonsCO2\": 500.75,\n  \"offsetTonsCO2\": 150.00,\n  \"referenceYear\": 2024,\n  \"referenceMonth\": 6,\n  \"description\": \"Emissões do segundo trimestre\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ]
+    },
+    {
+      "_id": "req_carbon_update",
+      "parentId": "fld_carbon",
+      "_type": "request",
+      "name": "Atualizar Emissão (Auth)",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/api/CarbonEmissions/1",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"emissionTonsCO2\": 1400.00,\n  \"offsetTonsCO2\": 500.00,\n  \"description\": \"Valores atualizados após compensação\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ]
+    },
+    {
+      "_id": "req_carbon_delete",
+      "parentId": "fld_carbon",
+      "_type": "request",
+      "name": "Deletar Emissão (Admin)",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/api/CarbonEmissions/1",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ]
+    },
+    {
+      "_id": "fld_licenses",
+      "parentId": "wrk_ecotracker",
+      "_type": "request_group",
+      "name": "Environmental Licenses"
+    },
+    {
+      "_id": "req_licenses_list",
+      "parentId": "fld_licenses",
+      "_type": "request",
+      "name": "Listar Licenças (com paginação)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/EnvironmentalLicenses?page=1&pageSize=10",
+      "headers": []
+    },
+    {
+      "_id": "req_licenses_get",
+      "parentId": "fld_licenses",
+      "_type": "request",
+      "name": "Obter Licença por ID",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/EnvironmentalLicenses/1",
+      "headers": []
+    },
+    {
+      "_id": "req_licenses_expiring",
+      "parentId": "fld_licenses",
+      "_type": "request",
+      "name": "Licenças Expirando (próx 90 dias)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/EnvironmentalLicenses/expiring?days=90",
+      "headers": []
+    },
+    {
+      "_id": "req_licenses_create",
+      "parentId": "fld_licenses",
+      "_type": "request",
+      "name": "Criar Licença (Auth)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/EnvironmentalLicenses",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"companyName\": \"Nova Empresa SA\",\n  \"licenseNumber\": \"LIC-2024-100\",\n  \"licenseType\": \"Licença de Instalação\",\n  \"issuingAuthority\": \"IBAMA\",\n  \"issueDate\": \"2024-06-01T00:00:00Z\",\n  \"expirationDate\": \"2026-06-01T00:00:00Z\",\n  \"notes\": \"Licença para nova unidade industrial\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ]
+    },
+    {
+      "_id": "req_licenses_update",
+      "parentId": "fld_licenses",
+      "_type": "request",
+      "name": "Atualizar Licença (Auth)",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/api/EnvironmentalLicenses/1",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"status\": \"Renewed\",\n  \"expirationDate\": \"2027-01-01T00:00:00Z\",\n  \"notes\": \"Licença renovada\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ]
+    },
+    {
+      "_id": "req_licenses_delete",
+      "parentId": "fld_licenses",
+      "_type": "request",
+      "name": "Deletar Licença (Admin)",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/api/EnvironmentalLicenses/1",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ]
+    },
+    {
+      "_id": "fld_audits",
+      "parentId": "wrk_ecotracker",
+      "_type": "request_group",
+      "name": "Compliance Audits"
+    },
+    {
+      "_id": "req_audits_list",
+      "parentId": "fld_audits",
+      "_type": "request",
+      "name": "Listar Auditorias (com paginação)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/ComplianceAudits?page=1&pageSize=10",
+      "headers": []
+    },
+    {
+      "_id": "req_audits_get",
+      "parentId": "fld_audits",
+      "_type": "request",
+      "name": "Obter Auditoria por ID",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/ComplianceAudits/1",
+      "headers": []
+    },
+    {
+      "_id": "req_audits_filter_norm",
+      "parentId": "fld_audits",
+      "_type": "request",
+      "name": "Listar Auditorias por Norma",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/ComplianceAudits?norm=ISO 14001",
+      "headers": []
+    },
+    {
+      "_id": "req_audits_create",
+      "parentId": "fld_audits",
+      "_type": "request",
+      "name": "Criar Auditoria (Auth)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/ComplianceAudits",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"companyName\": \"Nova Empresa SA\",\n  \"auditorName\": \"Carlos Santos\",\n  \"normReference\": \"ISO 14001:2015\",\n  \"auditDate\": \"2024-06-15T00:00:00Z\",\n  \"complianceScore\": 85,\n  \"findings\": \"Boa conformidade geral, melhorias menores necessárias\",\n  \"correctiveActions\": \"Atualizar procedimentos de descarte\",\n  \"nextAuditDate\": \"2025-06-15T00:00:00Z\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ]
+    },
+    {
+      "_id": "req_audits_update",
+      "parentId": "fld_audits",
+      "_type": "request",
+      "name": "Atualizar Auditoria (Auth)",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/api/ComplianceAudits/1",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"result\": \"Approved\",\n  \"complianceScore\": 95,\n  \"findings\": \"Todas as não conformidades foram corrigidas\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ]
+    },
+    {
+      "_id": "req_audits_delete",
+      "parentId": "fld_audits",
+      "_type": "request",
+      "name": "Deletar Auditoria (Admin)",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/api/ComplianceAudits/1",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ]
+    },
+    {
+      "_id": "fld_alerts",
+      "parentId": "wrk_ecotracker",
+      "_type": "request_group",
+      "name": "Environmental Alerts"
+    },
+    {
+      "_id": "req_alerts_list",
+      "parentId": "fld_alerts",
+      "_type": "request",
+      "name": "Listar Alertas (com paginação)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/EnvironmentalAlerts?page=1&pageSize=10",
+      "headers": []
+    },
+    {
+      "_id": "req_alerts_unresolved",
+      "parentId": "fld_alerts",
+      "_type": "request",
+      "name": "Listar Alertas Não Resolvidos",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/EnvironmentalAlerts?resolved=false",
+      "headers": []
+    },
+    {
+      "_id": "req_alerts_critical",
+      "parentId": "fld_alerts",
+      "_type": "request",
+      "name": "Listar Alertas Críticos",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/EnvironmentalAlerts?severity=Critical",
+      "headers": []
+    },
+    {
+      "_id": "req_alerts_get",
+      "parentId": "fld_alerts",
+      "_type": "request",
+      "name": "Obter Alerta por ID",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/EnvironmentalAlerts/1",
+      "headers": []
+    },
+    {
+      "_id": "req_alerts_create",
+      "parentId": "fld_alerts",
+      "_type": "request",
+      "name": "Criar Alerta (Auth)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/EnvironmentalAlerts",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"companyName\": \"EcoCorp Brasil\",\n  \"alertType\": \"EmissionThreshold\",\n  \"severity\": \"High\",\n  \"message\": \"Emissões de CO2 ultrapassaram 2000 toneladas no mês\",\n  \"relatedLicenseNumber\": \"LIC-2024-001\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ]
+    },
+    {
+      "_id": "req_alerts_resolve",
+      "parentId": "fld_alerts",
+      "_type": "request",
+      "name": "Resolver Alerta (Auth)",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/api/EnvironmentalAlerts/1/resolve",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"resolutionNotes\": \"Licença renovada junto ao IBAMA em 20/06/2024\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ]
+    },
+    {
+      "_id": "req_alerts_delete",
+      "parentId": "fld_alerts",
+      "_type": "request",
+      "name": "Deletar Alerta (Admin)",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/api/EnvironmentalAlerts/1",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ]
+    }
+  ]
+}
