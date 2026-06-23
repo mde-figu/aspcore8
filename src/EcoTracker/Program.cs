@@ -115,11 +115,21 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// Seed InMemory database
+// Inicialização do banco de dados
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<EcoTrackerDbContext>();
-    context.Database.EnsureCreated();
+
+    if (context.Database.IsSqlServer())
+    {
+        // SQL Server: aplica migrações pendentes automaticamente
+        context.Database.Migrate();
+    }
+    else
+    {
+        // InMemory: cria o schema e seed data
+        context.Database.EnsureCreated();
+    }
 }
 
 app.Run();
