@@ -29,6 +29,9 @@ public class GlobalExceptionMiddleware
 
     private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
+        if (context.Response.HasStarted)
+            return;
+
         context.Response.ContentType = "application/json";
 
         var (statusCode, message) = exception switch
