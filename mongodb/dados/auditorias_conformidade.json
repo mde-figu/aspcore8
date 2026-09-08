@@ -1,0 +1,274 @@
+[
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cf6"
+    },
+    "cnpj": "12.345.678/0001-90",
+    "norma": "ISO 14001:2015",
+    "dataAuditoria": {
+      "$date": "2026-03-12T00:00:00Z"
+    },
+    "auditor": {
+      "nome": "Carla Menezes",
+      "registro": "AUD-4471",
+      "externo": true
+    },
+    "resultado": "Conforme com observações",
+    "itens": [
+      {
+        "dimensao": "Ambiental",
+        "requisito": "Gestão de resíduos",
+        "conforme": true
+      },
+      {
+        "dimensao": "Governança",
+        "requisito": "Registro de licenças",
+        "conforme": true
+      },
+      {
+        "dimensao": "Social",
+        "requisito": "Treinamento de segurança",
+        "conforme": false,
+        "prazoAcao": {
+          "$date": "2026-06-30T00:00:00Z"
+        }
+      }
+    ],
+    "scoreObtido": 87.5
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cf7"
+    },
+    "cnpj": "23.456.789/0001-01",
+    "norma": "ISO 14001:2015",
+    "dataAuditoria": {
+      "$date": "2026-02-28T00:00:00Z"
+    },
+    "auditor": {
+      "nome": "Rafael Duarte",
+      "registro": "AUD-2210",
+      "externo": false
+    },
+    "resultado": "Não conforme",
+    "itens": [
+      {
+        "dimensao": "Ambiental",
+        "requisito": "Controle de emissões da frota",
+        "conforme": false
+      },
+      {
+        "dimensao": "Governança",
+        "requisito": "Renovação de licenças",
+        "conforme": false
+      }
+    ],
+    "naoConformidades": [
+      {
+        "grau": "Maior",
+        "descricao": "LO vencendo sem protocolo tempestivo",
+        "planoAcao": "Protocolar renovação",
+        "status": "Em tratamento"
+      }
+    ],
+    "scoreObtido": 52,
+    "reauditoria": {
+      "$date": "2026-09-15T00:00:00Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cf9"
+    },
+    "cnpj": "45.678.901/0001-23",
+    "norma": "Política Nacional de Resíduos Sólidos",
+    "dataAuditoria": {
+      "$date": "2026-05-06T00:00:00Z"
+    },
+    "resultado": "Conforme com observações",
+    "escopo": "Coleta seletiva municipal",
+    "scoreObtido": 63
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cfa"
+    },
+    "cnpj": "56.789.012/0001-34",
+    "norma": "ISO 14064-1",
+    "dataAuditoria": {
+      "$date": "2026-04-22T00:00:00Z"
+    },
+    "auditor": {
+      "nome": "Marcos Tavares",
+      "registro": "AUD-9087",
+      "externo": true
+    },
+    "resultado": "Conforme",
+    "itens": [
+      {
+        "dimensao": "Ambiental",
+        "requisito": "Inventário de GEE",
+        "conforme": true
+      },
+      {
+        "dimensao": "Governança",
+        "requisito": "Rastreabilidade dos dados",
+        "conforme": true
+      }
+    ],
+    "scoreObtido": 94
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cfb"
+    },
+    "cnpj": "67.890.123/0001-45",
+    "norma": "ISO 14001:2015",
+    "dataAuditoria": {
+      "$date": "2026-03-30T00:00:00Z"
+    },
+    "auditor": {
+      "nome": "Carla Menezes",
+      "registro": "AUD-4471",
+      "externo": true
+    },
+    "resultado": "Não conforme",
+    "itens": [
+      {
+        "dimensao": "Ambiental",
+        "requisito": "Emissões atmosféricas",
+        "conforme": false
+      },
+      {
+        "dimensao": "Social",
+        "requisito": "Comunicação com a comunidade",
+        "conforme": false
+      },
+      {
+        "dimensao": "Governança",
+        "requisito": "Condicionantes da LO",
+        "conforme": false
+      }
+    ],
+    "naoConformidades": [
+      {
+        "grau": "Crítica",
+        "descricao": "Emissões acima do limite por 2 competências",
+        "planoAcao": "Retrofit de filtros"
+      }
+    ],
+    "scoreObtido": 41.2
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cfc"
+    },
+    "cnpj": "78.901.234/0001-56",
+    "norma": "NBR 15112 (resíduos da construção)",
+    "dataAuditoria": {
+      "$date": "2026-06-11T00:00:00Z"
+    },
+    "resultado": "Conforme",
+    "scoreObtido": 71
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cfd"
+    },
+    "cnpj": "89.012.345/0001-67",
+    "norma": "Logística Reversa (Dec. 9.177/2017)",
+    "dataAuditoria": {
+      "$date": "2026-05-19T00:00:00Z"
+    },
+    "resultado": "Conforme com observações",
+    "scoreObtido": 74.5,
+    "itens": [
+      {
+        "dimensao": "Ambiental",
+        "requisito": "Pontos de entrega voluntária",
+        "conforme": true
+      },
+      {
+        "dimensao": "Social",
+        "requisito": "Parceria com cooperativas de catadores",
+        "conforme": false
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cfe"
+    },
+    "cnpj": "90.123.456/0001-78",
+    "norma": "ISO 14001:2015",
+    "dataAuditoria": {
+      "$date": "2026-02-05T00:00:00Z"
+    },
+    "resultado": "Conforme",
+    "scoreObtido": 96
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cff"
+    },
+    "cnpj": "01.234.567/0001-89",
+    "norma": "RDC 222/2018 (RSS)",
+    "dataAuditoria": {
+      "$date": "2026-04-02T00:00:00Z"
+    },
+    "auditor": {
+      "nome": "Juliana Prado",
+      "externo": true
+    },
+    "resultado": "Conforme com observações",
+    "scoreObtido": 82.3,
+    "itens": [
+      {
+        "dimensao": "Ambiental",
+        "requisito": "Segregação de resíduos",
+        "conforme": true
+      },
+      {
+        "dimensao": "Social",
+        "requisito": "Treinamento das equipes",
+        "conforme": true
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87d00"
+    },
+    "cnpj": "11.222.333/0001-44",
+    "norma": "ISO 14001:2015",
+    "dataAuditoria": {
+      "$date": "2026-06-25T00:00:00Z"
+    },
+    "resultado": "Conforme",
+    "scoreObtido": 88,
+    "itens": [
+      {
+        "dimensao": "Social",
+        "requisito": "Segurança dos cooperados",
+        "conforme": true
+      },
+      {
+        "dimensao": "Governança",
+        "requisito": "Rastreio de destinação final",
+        "conforme": true
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87d01"
+    },
+    "cnpj": "12.345.678/0001-90",
+    "norma": "ISO 50001 (energia)",
+    "dataAuditoria": {
+      "$date": "2026-07-14T00:00:00Z"
+    },
+    "resultado": "Conforme com observações",
+    "scoreObtido": 79.8
+  }
+]

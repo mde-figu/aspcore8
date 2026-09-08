@@ -1,0 +1,207 @@
+[
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87d02"
+    },
+    "cnpj": "67.890.123/0001-45",
+    "tipo": "LIMITE_EMISSAO",
+    "severidade": "CRITICA",
+    "criadoEm": {
+      "$date": "2026-02-05T08:12:00Z"
+    },
+    "resolvido": false,
+    "dados": {
+      "competencia": "2026-01",
+      "limiteTonCO2e": 3000,
+      "medidoTonCO2e": 3890.4,
+      "excedente": 0.297
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87d05"
+    },
+    "cnpj": "23.456.789/0001-01",
+    "tipo": "NAO_CONFORMIDADE",
+    "severidade": "CRITICA",
+    "criadoEm": {
+      "$date": "2026-03-01T10:00:00Z"
+    },
+    "resolvido": false,
+    "dados": {
+      "norma": "ISO 14001:2015",
+      "grau": "Maior",
+      "responsavel": "Diretoria de Operações"
+    },
+    "escaladoEm": {
+      "$date": "2026-08-26T09:00:00Z"
+    },
+    "escaladoPara": "Comitê ESG"
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87d07"
+    },
+    "cnpj": "45.678.901/0001-23",
+    "tipo": "QUALIDADE_AR",
+    "severidade": "CRITICA",
+    "criadoEm": {
+      "$date": "2026-08-21T13:20:00Z"
+    },
+    "resolvido": false,
+    "dados": {
+      "estacao": "Centro",
+      "aqi": 168,
+      "poluente": "MP2,5",
+      "ugM3": 78.4,
+      "fonte": "OpenWeatherMap"
+    },
+    "escaladoEm": {
+      "$date": "2026-08-26T09:00:00Z"
+    },
+    "escaladoPara": "Comitê ESG"
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87d08"
+    },
+    "cnpj": "45.678.901/0001-23",
+    "tipo": "QUALIDADE_AR",
+    "severidade": "MEDIA",
+    "criadoEm": {
+      "$date": "2026-08-24T07:45:00Z"
+    },
+    "resolvido": false,
+    "dados": {
+      "estacao": "Zona Industrial",
+      "aqi": 121,
+      "poluente": "O3",
+      "ugM3": 143
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87d09"
+    },
+    "cnpj": "89.012.345/0001-67",
+    "tipo": "CONSUMO_ENERGIA",
+    "severidade": "MEDIA",
+    "criadoEm": {
+      "$date": "2026-05-30T22:10:00Z"
+    },
+    "resolvido": false,
+    "dados": {
+      "loja": "Unidade Tatuapé",
+      "consumoKWh": 42800,
+      "mediaHistoricaKWh": 35100,
+      "variacao": 0.219,
+      "sensorIoT": "MED-3391"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87d0b"
+    },
+    "cnpj": "34.567.890/0001-12",
+    "tipo": "LIMITE_EMISSAO",
+    "severidade": "MEDIA",
+    "criadoEm": {
+      "$date": "2026-02-08T12:00:00Z"
+    },
+    "resolvido": false,
+    "dados": {
+      "competencia": "2026-01",
+      "limiteTonCO2e": 2500,
+      "medidoTonCO2e": 2310.9,
+      "excedente": 0
+    },
+    "observacao": "Alerta preventivo: 92% do limite"
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87d0d"
+    },
+    "cnpj": "12.345.678/0001-90",
+    "tipo": "LICENCA_A_VENCER",
+    "severidade": "MEDIA",
+    "criadoEm": {
+      "$date": "2026-07-17T08:00:00Z"
+    },
+    "resolvido": false,
+    "dados": {
+      "numero": "AAF-2024-1180",
+      "diasParaVencer": 90,
+      "orgao": "FEAM/MG"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87d0e"
+    },
+    "cnpj": "34.567.890/0001-12",
+    "tipo": "NAO_CONFORMIDADE",
+    "severidade": "MEDIA",
+    "criadoEm": {
+      "$date": "2026-08-01T10:10:00Z"
+    },
+    "resolvido": false,
+    "dados": {
+      "norma": "Rainforest Alliance 2020",
+      "requisito": "Uso de defensivos",
+      "grau": "Menor"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87d0f"
+    },
+    "cnpj": "11.222.333/0001-44",
+    "tipo": "CONSUMO_ENERGIA",
+    "severidade": "BAIXA",
+    "criadoEm": {
+      "$date": "2026-08-09T18:40:00Z"
+    },
+    "resolvido": false,
+    "dados": {
+      "galpao": "Triagem 2",
+      "consumoKWh": 8100,
+      "sensorIoT": "MED-1207"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87d10"
+    },
+    "cnpj": "78.901.234/0001-56",
+    "tipo": "QUALIDADE_AR",
+    "severidade": "MEDIA",
+    "criadoEm": {
+      "$date": "2026-08-12T15:05:00Z"
+    },
+    "resolvido": false,
+    "dados": {
+      "obra": "Residencial Aurora",
+      "poluente": "MP10",
+      "ugM3": 96.2,
+      "medicao": "sensor de canteiro"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87d11"
+    },
+    "cnpj": "90.123.456/0001-78",
+    "tipo": "LIMITE_EMISSAO",
+    "severidade": "BAIXA",
+    "criadoEm": {
+      "$date": "2026-08-18T08:30:00Z"
+    },
+    "resolvido": false,
+    "dados": {
+      "competencia": "2026-03",
+      "limiteTonCO2e": 50,
+      "medidoTonCO2e": 3.4,
+      "excedente": 0
+    }
+  }
+]
