@@ -1,0 +1,227 @@
+[
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cdc"
+    },
+    "cnpj": "12.345.678/0001-90",
+    "escopo": 1,
+    "competencia": "2026-01",
+    "toneladasCO2e": 362.7,
+    "fonte": "combustao_estacionaria",
+    "detalhe": {
+      "combustivel": "Gás natural",
+      "volumeM3": 210500,
+      "fatorEmissao": 0.00196
+    },
+    "compensacao": {
+      "creditos": 50,
+      "projeto": "Reflorestamento Mata Atlântica",
+      "certificadora": "Verra",
+      "data": {
+        "$date": "2026-08-20T00:00:00Z"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cdd"
+    },
+    "cnpj": "12.345.678/0001-90",
+    "escopo": 2,
+    "competencia": "2026-01",
+    "toneladasCO2e": 188.3,
+    "fonte": "energia_eletrica",
+    "detalhe": {
+      "consumoKWh": 2450000,
+      "fatorRedeSIN": 0.0769,
+      "origem": "rede"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cde"
+    },
+    "cnpj": "12.345.678/0001-90",
+    "escopo": 3,
+    "competencia": "2026-01",
+    "toneladasCO2e": 96.4,
+    "fonte": "viagens_negocio",
+    "detalhe": {
+      "trechos": [
+        {
+          "origem": "GRU",
+          "destino": "BSB",
+          "passageiros": 12
+        },
+        {
+          "origem": "GRU",
+          "destino": "CNF",
+          "passageiros": 8
+        }
+      ]
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cdf"
+    },
+    "cnpj": "23.456.789/0001-01",
+    "escopo": 1,
+    "competencia": "2026-01",
+    "toneladasCO2e": 1043.2,
+    "fonte": "frota_propria",
+    "detalhe": {
+      "veiculos": 148,
+      "kmRodados": 1860000,
+      "combustivel": "Diesel S10"
+    },
+    "classificacao": "ALTO_IMPACTO",
+    "revisarInventario": true
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87ce0"
+    },
+    "cnpj": "23.456.789/0001-01",
+    "escopo": 1,
+    "competencia": "2026-02",
+    "toneladasCO2e": 987.6,
+    "fonte": "frota_propria",
+    "detalhe": {
+      "veiculos": 150,
+      "kmRodados": 1742000,
+      "combustivel": "Diesel S10"
+    },
+    "compensacao": {
+      "creditos": 300,
+      "projeto": "REDD+ Jari Pará",
+      "certificadora": "Verra"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87ce1"
+    },
+    "cnpj": "34.567.890/0001-12",
+    "escopo": 1,
+    "competencia": "2026-01",
+    "toneladasCO2e": 2310.9,
+    "fonte": "fermentacao_enterica",
+    "detalhe": {
+      "cabecasGado": 18400
+    },
+    "classificacao": "ALTO_IMPACTO",
+    "revisarInventario": true
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87ce2"
+    },
+    "cnpj": "34.567.890/0001-12",
+    "escopo": 3,
+    "competencia": "2026-01",
+    "toneladasCO2e": 705.1,
+    "fonte": "transporte_terceirizado",
+    "detalhe": {
+      "transportadoras": 6,
+      "tonKm": 4200000
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87ce4"
+    },
+    "cnpj": "67.890.123/0001-45",
+    "escopo": 1,
+    "competencia": "2026-01",
+    "toneladasCO2e": 3890.4,
+    "fonte": "processo_industrial",
+    "detalhe": {
+      "processo": "Craqueamento",
+      "vaporTon": 51200
+    },
+    "acimaDoLimite": true,
+    "classificacao": "ALTO_IMPACTO",
+    "revisarInventario": true
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87ce5"
+    },
+    "cnpj": "67.890.123/0001-45",
+    "escopo": 1,
+    "competencia": "2026-02",
+    "toneladasCO2e": 3654.1,
+    "fonte": "processo_industrial",
+    "detalhe": {
+      "processo": "Craqueamento",
+      "vaporTon": 48700
+    },
+    "acimaDoLimite": true,
+    "classificacao": "ALTO_IMPACTO",
+    "revisarInventario": true
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87ce6"
+    },
+    "cnpj": "89.012.345/0001-67",
+    "escopo": 2,
+    "competencia": "2026-01",
+    "toneladasCO2e": 74.6,
+    "fonte": "energia_eletrica",
+    "detalhe": {
+      "consumoKWh": 970000,
+      "lojas": 34
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87ce8"
+    },
+    "cnpj": "11.222.333/0001-44",
+    "escopo": 3,
+    "competencia": "2026-02",
+    "toneladasCO2e": 41.5,
+    "fonte": "coleta_seletiva",
+    "detalhe": {
+      "rotas": 22,
+      "toneladasColetadas": 318,
+      "materialReciclado": 0.71
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87ce9"
+    },
+    "cnpj": "78.901.234/0001-56",
+    "escopo": 1,
+    "competencia": "2026-02",
+    "toneladasCO2e": 264,
+    "fonte": "maquinario_obra",
+    "detalhe": {
+      "equipamentos": 19,
+      "horasOperacao": 3120,
+      "combustivel": "Diesel S10"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae776870af447cc1320"
+    },
+    "cnpj": "12.345.678/0001-90",
+    "escopo": 3,
+    "competencia": "2026-04",
+    "toneladasCO2e": 7.9,
+    "fonte": "home_office",
+    "detalhe": {
+      "colaboradores": 88,
+      "diasRemotos": 12,
+      "metodologia": "GHG Protocol Scope 3 cat. 7"
+    },
+    "tags": [
+      "piloto",
+      "novo indicador"
+    ]
+  }
+]

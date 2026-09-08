@@ -1,0 +1,245 @@
+[
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cea"
+    },
+    "cnpj": "12.345.678/0001-90",
+    "numero": "LO-2023-0451",
+    "tipo": "LO",
+    "orgao": "CETESB",
+    "emissao": {
+      "$date": "2023-05-10T00:00:00Z"
+    },
+    "validade": {
+      "$date": "2027-05-10T00:00:00Z"
+    },
+    "situacao": "Vigente",
+    "condicionantes": [
+      {
+        "descricao": "Monitorar efluentes trimestralmente",
+        "prazo": {
+          "$date": "2026-12-31T00:00:00Z"
+        },
+        "atendida": true
+      },
+      {
+        "descricao": "Relatório de emissões atmosféricas",
+        "prazo": {
+          "$date": "2026-10-01T00:00:00Z"
+        },
+        "atendida": true,
+        "dataAtendimento": {
+          "$date": "2026-08-15T00:00:00Z"
+        }
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87ceb"
+    },
+    "cnpj": "12.345.678/0001-90",
+    "numero": "AAF-2024-1180",
+    "tipo": "AAF",
+    "orgao": "FEAM/MG",
+    "emissao": {
+      "$date": "2024-02-20T00:00:00Z"
+    },
+    "validade": {
+      "$date": "2026-10-15T00:00:00Z"
+    },
+    "situacao": "Vigente"
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cec"
+    },
+    "cnpj": "23.456.789/0001-01",
+    "numero": "LO-2022-7712",
+    "tipo": "LO",
+    "orgao": "CETESB",
+    "emissao": {
+      "$date": "2022-08-01T00:00:00Z"
+    },
+    "validade": {
+      "$date": "2026-09-30T00:00:00Z"
+    },
+    "situacao": "Em renovação",
+    "renovacoes": [
+      {
+        "protocolo": "REN-2026-338",
+        "data": {
+          "$date": "2026-06-02T00:00:00Z"
+        },
+        "status": "Em análise"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87ced"
+    },
+    "cnpj": "34.567.890/0001-12",
+    "numero": "OUT-2021-0099",
+    "tipo": "Outorga",
+    "orgao": "ANA",
+    "emissao": {
+      "$date": "2021-03-15T00:00:00Z"
+    },
+    "validade": {
+      "$date": "2031-03-15T00:00:00Z"
+    },
+    "situacao": "Vigente",
+    "volumeOutorgadoM3Ano": 1850000
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cee"
+    },
+    "cnpj": "34.567.890/0001-12",
+    "numero": "LI-2025-2210",
+    "tipo": "LI",
+    "orgao": "IBAMA",
+    "emissao": {
+      "$date": "2025-11-11T00:00:00Z"
+    },
+    "validade": {
+      "$date": "2027-11-11T00:00:00Z"
+    },
+    "situacao": "Vigente",
+    "condicionantes": [
+      {
+        "descricao": "Compensação de reserva legal (120 ha)",
+        "prazo": {
+          "$date": "2027-01-31T00:00:00Z"
+        },
+        "atendida": false
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cf0"
+    },
+    "cnpj": "67.890.123/0001-45",
+    "numero": "LO-2020-3345",
+    "tipo": "LO",
+    "orgao": "CETESB",
+    "emissao": {
+      "$date": "2020-07-07T00:00:00Z"
+    },
+    "validade": {
+      "$date": "2026-09-15T00:00:00Z"
+    },
+    "situacao": "Em renovação",
+    "condicionantes": [
+      {
+        "descricao": "Plano de contingência de vazamentos",
+        "prazo": {
+          "$date": "2026-08-30T00:00:00Z"
+        },
+        "atendida": false
+      }
+    ],
+    "riscoRenovacao": "Alto",
+    "renovacoes": [
+      {
+        "protocolo": "REN-2026-901",
+        "data": {
+          "$date": "2026-08-25T00:00:00Z"
+        },
+        "status": "Protocolada"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cf1"
+    },
+    "cnpj": "78.901.234/0001-56",
+    "numero": "LI-2026-0512",
+    "tipo": "LI",
+    "orgao": "Prefeitura",
+    "emissao": {
+      "$date": "2026-04-05T00:00:00Z"
+    },
+    "validade": {
+      "$date": "2028-04-05T00:00:00Z"
+    },
+    "situacao": "Vigente"
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cf2"
+    },
+    "cnpj": "89.012.345/0001-67",
+    "numero": "LO-2024-8890",
+    "tipo": "LO",
+    "orgao": "CETESB",
+    "emissao": {
+      "$date": "2024-09-09T00:00:00Z"
+    },
+    "validade": {
+      "$date": "2029-09-09T00:00:00Z"
+    },
+    "situacao": "Vigente"
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cf3"
+    },
+    "cnpj": "01.234.567/0001-89",
+    "numero": "LO-2023-6621",
+    "tipo": "LO",
+    "orgao": "Vigilância Sanitária",
+    "emissao": {
+      "$date": "2023-12-01T00:00:00Z"
+    },
+    "validade": {
+      "$date": "2026-12-01T00:00:00Z"
+    },
+    "situacao": "Vigente",
+    "condicionantes": [
+      {
+        "descricao": "PGRSS revisado anualmente",
+        "prazo": {
+          "$date": "2026-11-01T00:00:00Z"
+        },
+        "atendida": true
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cf4"
+    },
+    "cnpj": "11.222.333/0001-44",
+    "numero": "LO-2025-4407",
+    "tipo": "LO",
+    "orgao": "Prefeitura",
+    "emissao": {
+      "$date": "2025-06-18T00:00:00Z"
+    },
+    "validade": {
+      "$date": "2029-06-18T00:00:00Z"
+    },
+    "situacao": "Vigente",
+    "objeto": "Central de triagem de recicláveis"
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cf5"
+    },
+    "cnpj": "90.123.456/0001-78",
+    "numero": "LO-2026-1150",
+    "tipo": "LO",
+    "orgao": "ANEEL/Estadual",
+    "emissao": {
+      "$date": "2026-02-14T00:00:00Z"
+    },
+    "validade": {
+      "$date": "2031-02-14T00:00:00Z"
+    },
+    "situacao": "Vigente"
+  }
+]

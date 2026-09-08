@@ -1,0 +1,176 @@
+[
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cd1"
+    },
+    "cnpj": "12.345.678/0001-90",
+    "razaoSocial": "Metalúrgica Horizonte S.A.",
+    "setor": "Indústria",
+    "porte": "Grande",
+    "scoreConformidade": 87.5,
+    "certificacoes": [
+      "ISO 14001",
+      "ISO 45001"
+    ],
+    "unidades": [
+      {
+        "nome": "Planta Osasco",
+        "uf": "SP",
+        "funcionarios": 420
+      },
+      {
+        "nome": "Planta Betim",
+        "uf": "MG",
+        "funcionarios": 260
+      }
+    ],
+    "indicadoresSociais": {
+      "mulheresLideranca": 0.31,
+      "pcd": 0.05,
+      "programaDiversidade": true
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cd2"
+    },
+    "cnpj": "23.456.789/0001-01",
+    "razaoSocial": "TransLog Transportes Ltda.",
+    "setor": "Logística",
+    "porte": "Médio",
+    "scoreConformidade": 72,
+    "frota": {
+      "veiculos": 148,
+      "eletricos": 12
+    },
+    "indicadoresSociais": {
+      "mulheresLideranca": 0.18,
+      "pcd": 0.03
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cd3"
+    },
+    "cnpj": "34.567.890/0001-12",
+    "razaoSocial": "AgroVale Alimentos S.A.",
+    "setor": "Agronegócio",
+    "porte": "Grande",
+    "scoreConformidade": 64.3,
+    "certificacoes": [
+      "Rainforest Alliance"
+    ],
+    "areaPreservacaoHa": 1240
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cd4"
+    },
+    "cnpj": "45.678.901/0001-23",
+    "razaoSocial": "Prefeitura de Serra Verde",
+    "setor": "Setor Público",
+    "tipoEntidade": "Município",
+    "habitantes": 96000,
+    "scoreConformidade": 58.9,
+    "programas": [
+      "Coleta seletiva",
+      "Frota elétrica"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cd5"
+    },
+    "cnpj": "56.789.012/0001-34",
+    "razaoSocial": "DataCloud Serviços de TI Ltda.",
+    "setor": "Tecnologia",
+    "porte": "Médio",
+    "scoreConformidade": 91.2,
+    "energiaRenovavelPercentual": 0.94,
+    "indicadoresSociais": {
+      "mulheresLideranca": 0.44,
+      "pcd": 0.07,
+      "programaDiversidade": true
+    },
+    "certificacoes": [
+      "ISO 14064-1"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cd6"
+    },
+    "cnpj": "67.890.123/0001-45",
+    "razaoSocial": "Química Atlântica S.A.",
+    "setor": "Química",
+    "porte": "Grande",
+    "scoreConformidade": 41.2,
+    "riscoAmbiental": "Crítico",
+    "unidades": [
+      {
+        "nome": "Polo Cubatão",
+        "uf": "SP",
+        "funcionarios": 610
+      }
+    ],
+    "atualizadoEm": {
+      "$date": "2026-09-08T22:23:34.948Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cd8"
+    },
+    "cnpj": "89.012.345/0001-67",
+    "razaoSocial": "Rede Sabor Supermercados",
+    "setor": "Varejo",
+    "porte": "Grande",
+    "scoreConformidade": 76.1,
+    "lojas": 34,
+    "programas": [
+      "Logística reversa",
+      "Descarte de óleo"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cd9"
+    },
+    "cnpj": "90.123.456/0001-78",
+    "razaoSocial": "EnergiaSol Geração Distribuída",
+    "setor": "Energia",
+    "porte": "Pequeno",
+    "scoreConformidade": 95,
+    "capacidadeInstaladaMWp": 18.4
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cda"
+    },
+    "cnpj": "01.234.567/0001-89",
+    "razaoSocial": "Hospital Vida Plena",
+    "setor": "Saúde",
+    "porte": "Médio",
+    "scoreConformidade": 81.6,
+    "residuos": {
+      "classeA": true,
+      "classeB": true,
+      "planoPGRSS": "vigente"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6aa08ae661543a295cd87cdb"
+    },
+    "cnpj": "11.222.333/0001-44",
+    "razaoSocial": "Cooperativa Recicla Bem",
+    "setor": "Resíduos",
+    "porte": "Pequeno",
+    "scoreConformidade": 88,
+    "cooperados": 74,
+    "indicadoresSociais": {
+      "mulheresLideranca": 0.62,
+      "inclusaoProdutiva": true
+    }
+  }
+]
