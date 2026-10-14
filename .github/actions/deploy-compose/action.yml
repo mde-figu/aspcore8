@@ -1,0 +1,92 @@
+name: Deploy com Docker Compose
+description: Sobe a stack (API + SQL Server) em um ambiente e valida com smoke tests.
+
+inputs:
+  environment:
+    description: Nome do ambiente (staging, prod)
+    required: true
+  compose-override:
+    description: Arquivo de override do compose
+    required: true
+  api-image:
+    description: Imagem da API a ser implantada
+    required: true
+  api-port:
+    description: Porta publicada da API
+    required: true
+  registry:
+    description: Registry da imagem
+    required: true
+  registry-username:
+    description: Usuário do registry
+    required: true
+  registry-password:
+    description: Token do registry
+    required: true
+  sa-password:
+    description: Senha do SA do SQL Server
+    required: true
+  jwt-key:
+    description: Chave de assinatura do JWT
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Login no registry
+      shell: bash
+      run: echo "${{ inputs.registry-password }}" | docker login ${{ inputs.registry }} -u ${{ inputs.registry-username }} --password-stdin
+
+    - name: Gerar .env do ambiente
+      shell: bash
+      run: |
+        cat > .env <<EOF
+        ENVIRONMENT=${{ inputs.environment }}
+        API_IMAGE=${{ inputs.api-image }}
+        API_PORT=${{ inputs.api-port }}
+        DB_PORT=1433
+        MSSQL_SA_PASSWORD=${{ inputs.sa-password }}
+        JWT_KEY=${{ inputs.jwt-key }}
+        EOF
+
+    - name: Subir a stack
+      shell: bash
+      run: |
+        docker compose -f docker-compose.yml -f ${{ inputs.compose-override }} pull api
+        docker compose -f docker-compose.yml -f ${{ inputs.compose-override }} up -d --no-build
+
+    - name: Aguardar health check
+      shell: bash
+      run: |
+        for i in $(seq 1 40); do
+          if curl -fsS "http://localhost:${{ inputs.api-port }}/health" >/dev/null; then
+            echo "API saudável em ${{ inputs.environment }} (tentativa $i)"
+            exit 0
+          fi
+          sleep 10
+        done
+        echo "API não respondeu ao health check"
+        docker compose -f docker-compose.yml -f ${{ inputs.compose-override }} logs --tail 200
+        exit 1
+
+    - name: Smoke test (login JWT + consulta autenticada)
+      shell: bash
+      run: |
+        BASE="http://localhost:${{ inputs.api-port }}"
+        TOKEN=$(curl -fsS -X POST "$BASE/api/Auth/login" \
+          -H 'Content-Type: application/json' \
+          -d '{"username":"admin","password":"Admin@123"}' | sed -n 's/.*"token":"\([^"]*\)".*/\1/p')
+        test -n "$TOKEN" || { echo "login falhou"; exit 1; }
+        curl -fsS "$BASE/api/CarbonEmissions?pageNumber=1&pageSize=5" -H "Authorization: Bearer $TOKEN" | head -c 400
+        echo
+        echo "Smoke test de ${{ inputs.environment }} concluído"
+
+    - name: Estado dos containers
+      if: always()
+      shell: bash
+      run: docker compose -f docker-compose.yml -f ${{ inputs.compose-override }} ps
+
+    - name: Derrubar a stack
+      if: always()
+      shell: bash
+      run: docker compose -f docker-compose.yml -f ${{ inputs.compose-override }} down -v
