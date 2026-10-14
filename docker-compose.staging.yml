@@ -1,0 +1,18 @@
+# Override de staging: docker compose -f docker-compose.yml -f docker-compose.staging.yml up -d
+services:
+  db:
+    environment:
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+    volumes:
+      - mssql-data-staging:/var/opt/mssql
+
+  api:
+    environment:
+      ASPNETCORE_ENVIRONMENT: Staging
+      EnableSwagger: "true"
+      Logging__LogLevel__Default: Information
+    deploy:
+      replicas: 1
+
+volumes:
+  mssql-data-staging:

@@ -1,0 +1,134 @@
+name: CI/CD EcoTracker
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  DOTNET_VERSION: "8.0.x"
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}/ecotracker-api
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+      - run: dotnet restore EcoTracker.sln
+      - run: dotnet build EcoTracker.sln -c Release --no-restore
+      - name: Publicar artefato de build
+        run: dotnet publish src/EcoTracker/EcoTracker.csproj -c Release -o ./publish /p:UseAppHost=false
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ecotracker-publish
+          path: ./publish
+
+  test:
+    name: Testes automatizados
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+      - run: dotnet restore EcoTracker.sln
+      - name: dotnet test
+        run: dotnet test EcoTracker.sln -c Release --no-restore --logger "trx;LogFileName=test-results.trx" --results-directory ./TestResults
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: ./TestResults
+
+  docker:
+    name: Build e push da imagem
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image: ${{ steps.meta.outputs.image }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Definir tag da imagem
+        id: meta
+        run: |
+          IMAGE="${REGISTRY}/${IMAGE_NAME}"
+          echo "image=${IMAGE,,}" >> "$GITHUB_OUTPUT"
+        env:
+          REGISTRY: ${{ env.REGISTRY }}
+          IMAGE_NAME: ${{ env.IMAGE_NAME }}
+      - name: Login no GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build e push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: final
+          push: true
+          tags: |
+            ${{ steps.meta.outputs.image }}:${{ github.sha }}
+            ${{ steps.meta.outputs.image }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy-staging:
+    name: Deploy em staging
+    needs: docker
+    runs-on: ubuntu-latest
+    environment:
+      name: staging
+      url: http://localhost:8080/swagger
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/deploy-compose
+        with:
+          environment: staging
+          compose-override: docker-compose.staging.yml
+          api-image: ${{ needs.docker.outputs.image }}:${{ github.sha }}
+          api-port: "8080"
+          registry: ${{ env.REGISTRY }}
+          registry-username: ${{ github.actor }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
+          sa-password: ${{ secrets.MSSQL_SA_PASSWORD || 'Ecotracker@2026' }}
+          jwt-key: ${{ secrets.JWT_KEY || 'EcoTracker-SecretKey-2026-ESG-Compliance-Min32Chars!' }}
+
+  deploy-production:
+    name: Deploy em produção
+    needs: [docker, deploy-staging]
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: http://localhost:9090/health
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/deploy-compose
+        with:
+          environment: prod
+          compose-override: docker-compose.prod.yml
+          api-image: ${{ needs.docker.outputs.image }}:${{ github.sha }}
+          api-port: "9090"
+          registry: ${{ env.REGISTRY }}
+          registry-username: ${{ github.actor }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
+          sa-password: ${{ secrets.MSSQL_SA_PASSWORD || 'Ecotracker@2026' }}
+          jwt-key: ${{ secrets.JWT_KEY || 'EcoTracker-SecretKey-2026-ESG-Compliance-Min32Chars!' }}

@@ -31,3 +31,6 @@ artifacts/
 ## OS
 .DS_Store
 Thumbs.db
+
+## Ambiente local
+.env
