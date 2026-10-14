@@ -1,0 +1,20 @@
+# Override de produção: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+services:
+  db:
+    ports: !reset []     # banco não exposto para fora da rede interna em produção
+    volumes:
+      - mssql-data-prod:/var/opt/mssql
+
+  api:
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      EnableSwagger: "false"
+      Logging__LogLevel__Default: Warning
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1g
+
+volumes:
+  mssql-data-prod:

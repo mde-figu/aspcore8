@@ -55,6 +55,9 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
+// --- Health checks ---
+builder.Services.AddHealthChecks();
+
 // --- Controllers ---
 builder.Services.AddControllers();
 
@@ -101,25 +104,44 @@ var app = builder.Build();
 // --- Middleware ---
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
-// --- Swagger (dev) ---
-if (app.Environment.IsDevelopment())
+// --- Swagger (dev, staging e demais ambientes com EnableSwagger=true) ---
+if (app.Environment.IsDevelopment() || builder.Configuration.GetValue<bool>("EnableSwagger"))
 {
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "EcoTracker API v1"));
 }
 
-app.UseHttpsRedirection();
+if (!builder.Configuration.GetValue<bool>("DisableHttpsRedirection"))
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHealthChecks("/health").AllowAnonymous();
 
-// Seed InMemory database
+// Cria o schema (SQL Server) ou popula o banco InMemory, aguardando o banco subir
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<EcoTrackerDbContext>();
-    context.Database.EnsureCreated();
+    var logger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>().CreateLogger("Startup");
+    var attempts = builder.Configuration.GetValue("Database:StartupRetries", 10);
+
+    for (var attempt = 1; ; attempt++)
+    {
+        try
+        {
+            context.Database.EnsureCreated();
+            break;
+        }
+        catch (Exception ex) when (attempt < attempts)
+        {
+            logger.LogWarning(ex, "Banco indisponível (tentativa {Attempt}/{Attempts}); nova tentativa em 5s", attempt, attempts);
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+        }
+    }
 }
 
 app.Run();
