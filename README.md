@@ -179,7 +179,13 @@ Validação dos arquivos de Compose e logs da API:
 
 ![Config e logs](docs/devops/shot_config.png)
 
-As execuções do pipeline ficam em **Actions** do repositório: https://github.com/mde-figu/aspcore8/actions
+Execução real do pipeline no GitHub Actions (build → testes → imagem → staging → produção, todos verdes):
+
+![Pipeline](docs/devops/shot_pipeline.png)
+![Deploy staging no CI](docs/devops/shot_ci_staging.png)
+![Deploy produção no CI](docs/devops/shot_ci_prod.png)
+
+As execuções ficam em **Actions** do repositório: https://github.com/mde-figu/aspcore8/actions
 
 ## Checklist da entrega
 
