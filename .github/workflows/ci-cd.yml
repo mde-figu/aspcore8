@@ -112,7 +112,6 @@ jobs:
   deploy-production:
     name: Deploy em produção
     needs: [docker, deploy-staging]
-    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/heads/devin/')
     runs-on: ubuntu-latest
     environment:
       name: production
