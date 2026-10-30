@@ -200,6 +200,28 @@ O workflow `.github/workflows/ci-cd.yml` ganhou dois jobs, que passam a ser pré
 - **bdd-tests-docker** — sobe API + SQL Server com Docker Compose e executa a mesma suíte contra a stack real (artefato `bdd-test-report-docker`).
 
 
+## Evidências (Fase 7)
+
+Documentação completa, com os cenários Gherkin detalhados e as evidências: [`docs/EcoTracker_Fase7_Testes.pdf`](docs/EcoTracker_Fase7_Testes.pdf).
+
+Execução local com a API em memória (47/47) e relatório HTML do Reqnroll:
+
+![Execução local](docs/testes/shot_local.png)
+![Relatório Reqnroll](docs/testes/shot_report.png)
+
+Execução com Docker Compose contra a API em container + SQL Server:
+
+![Docker](docs/testes/shot_docker.png)
+
+Validação do contrato (o teste falha quando o schema não corresponde à resposta):
+
+![Contrato](docs/testes/shot_contract.png)
+
+GitHub Actions: os jobs BDD são pré-requisito para a imagem e o deploy:
+
+![CI](docs/testes/shot_ci.png)
+![CI logs](docs/testes/shot_ci_log.png)
+
 ---
 
 # DevOps — Fase 6
