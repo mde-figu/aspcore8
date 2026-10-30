@@ -1,6 +1,6 @@
 # EcoTracker — Projeto Cidades ESG Inteligentes
 
-**Fase 6 — DevOps** · Grupo 102 · Markus de Figueiredo Ferraz Wirz (markusfwirz@gmail.com)
+**Fase 7 — Testes Automatizados** · Grupo 69 · Markus de Figueiredo Ferraz Wirz · RM561367 (markusfwirz@gmail.com)
 
 API RESTful desenvolvida em **.NET Core 8** para o **Tema 4 — Governança e Compliance Ambiental**. A solução monitora emissões de carbono, controla licenças ambientais, registra auditorias de compliance e gerencia alertas ambientais automatizados.
 
@@ -81,7 +81,7 @@ Use o token no header: `Authorization: Bearer <token>`
 dotnet test
 ```
 
-17 testes de integração xUnit validando status code 200 para todos os controllers.
+17 testes de integração xUnit validando status code 200 para todos os controllers, mais a suíte **BDD/Gherkin** descrita na seção [Testes Automatizados — Fase 7](#testes-automatizados--fase-7).
 
 ## Banco de Dados
 
@@ -93,6 +93,134 @@ Para aplicar migrações no SQL Server:
 ```bash
 dotnet ef database update --project src/EcoTracker
 ```
+
+---
+
+# Testes Automatizados — Fase 7
+
+Suíte **BDD** escrita em **Gherkin (português)** e executada com **Reqnroll** (sucessor open source do SpecFlow) sobre xUnit, cobrindo **todas as APIs** do EcoTracker com validação de **status code**, **corpo JSON** e **contrato via JSON Schema** (draft 2020-12, `JsonSchema.Net`).
+
+## Relação com ESG
+
+Os cenários protegem as regras de **governança e compliance ambiental**: cálculo da emissão líquida (emissão − compensação), monitoramento de licenças próximas do vencimento, auditorias com nota 0–100 e ações corretivas, alertas críticos com rastreabilidade da resolução, e **controle de acesso por perfil** (Admin, Auditor, Viewer) garantindo que apenas administradores excluam registros regulatórios. Os testes em memória dispensam banco e containers, reduzindo tempo e consumo de recursos no CI.
+
+## Estrutura
+
+```
+tests/EcoTracker.BddTests/
+├── Features/                 # cenários Gherkin (# language: pt)
+│   ├── 01_Autenticacao.feature
+│   ├── 02_EmissoesCarbono.feature
+│   ├── 03_LicencasAmbientais.feature
+│   ├── 04_AuditoriasCompliance.feature
+│   ├── 05_AlertasAmbientais.feature
+│   └── 06_Saude.feature
+├── Schemas/                  # contratos JSON Schema das respostas
+├── Steps/                    # step definitions (HTTP genérico, autenticação, massa de dados ESG)
+├── Support/                  # ApiHost (em memória ou URL real), ApiContext, SchemaValidator, Hooks
+├── reqnroll.json             # idioma pt-BR + relatório HTML
+└── Dockerfile                # imagem do runner de testes
+docker-compose.tests.yml      # adiciona o serviço bdd-tests à stack API + SQL Server
+scripts/run-bdd-tests.sh      # execução local
+scripts/run-bdd-tests-docker.sh # execução contra a stack Docker
+```
+
+## Cobertura das APIs
+
+| API | Endpoints testados | Positivos | Negativos |
+|---|---|---|---|
+| Auth | `POST /api/Auth/login` | login dos 3 perfis + contrato do token | senha errada (401), payload inválido (400), token JWT inválido (401) |
+| Emissões de carbono | `GET`, `GET {id}`, `POST`, `PUT {id}`, `DELETE {id}` | paginação, cálculo de `netEmission`, filtros, atualização, exclusão | validação (400), anônimo (401), Auditor excluindo (403), id inexistente (404) |
+| Licenças ambientais | `GET`, `GET {id}`, `GET expiring`, `POST`, `PUT {id}`, `DELETE {id}` | filtro por status, licenças a vencer, suspensão, exclusão | campos obrigatórios (400), anônimo (401), Viewer excluindo (403), inexistente (404) |
+| Auditorias de compliance | `GET`, `GET {id}`, `POST`, `PUT {id}`, `DELETE {id}` | resultado pendente, filtro por norma, aprovação condicional | nota fora de 0–100 (400), Viewer excluindo (403), inexistente (404) |
+| Alertas ambientais | `GET`, `GET {id}`, `POST`, `PATCH {id}/resolve`, `DELETE {id}` | alerta crítico, filtro de abertos, resolução com notas | severidade inválida (400), resolução sem notas (400), anônimo (401), inexistente (404) |
+| Health | `GET /health` | `Healthy` em menos de 2 s | rota desconhecida (404) |
+
+**Total: 47 cenários** (incluindo os exemplos dos `Esquema do Cenário`), marcados com as tags `@positivo`/`@negativo`, `@contrato` e a tag do recurso.
+
+Exemplo:
+
+```gherkin
+@positivo @contrato
+Cenário: Registrar uma emissão calcula a emissão líquida (emissão - compensação)
+  Dado que estou autenticado como "auditor"
+  Quando eu envio uma requisição POST para "/api/CarbonEmissions" com o corpo:
+    """
+    {
+      "companyName": "Usina Solar {unico}",
+      "sector": "Energia Renovável",
+      "emissionTonsCO2": 1200.5,
+      "offsetTonsCO2": 200.5,
+      "referenceYear": 2026,
+      "referenceMonth": 9,
+      "description": "Inventário GEE - escopo 1 e 2"
+    }
+    """
+  Então o status code da resposta deve ser 201
+  E a resposta deve respeitar o contrato "carbon-emission.schema.json"
+  E a resposta deve conter o cabeçalho "Location"
+  E o campo "companyName" da resposta deve ser "Usina Solar {unico}"
+  E o campo "netEmission" da resposta deve ser "1000"
+```
+
+## Como executar
+
+Pré-requisito: .NET SDK 8 (modo local) ou Docker (modo stack).
+
+```bash
+# 1) Local, API em memória (WebApplicationFactory) — não precisa de banco
+./scripts/run-bdd-tests.sh
+#   ou: dotnet test tests/EcoTracker.BddTests
+
+# Somente os cenários negativos / somente um recurso
+./scripts/run-bdd-tests.sh --filter "Category=negativo"
+./scripts/run-bdd-tests.sh --filter "Category=licencas"
+
+# 2) Contra uma API já em execução (local, staging...)
+API_BASE_URL=http://localhost:8080 ./scripts/run-bdd-tests.sh
+
+# 3) Stack completa em Docker: SQL Server + API + container de testes
+./scripts/run-bdd-tests-docker.sh
+#   equivalente a:
+#   docker compose -f docker-compose.yml -f docker-compose.tests.yml up --build \
+#     --abort-on-container-exit --exit-code-from bdd-tests db api bdd-tests
+```
+
+Relatórios gerados:
+
+- `tests/EcoTracker.BddTests/TestResults/reqnroll_report.html` — relatório HTML com cada passo Gherkin (modo local)
+- `tests/EcoTracker.BddTests/TestResults/bdd-results.trx` — resultado no formato TRX
+- `TestResults/` na raiz — os mesmos relatórios no modo Docker
+
+## Pipeline (GitHub Actions)
+
+O workflow `.github/workflows/ci-cd.yml` ganhou dois jobs, que passam a ser pré-requisito para publicar a imagem e fazer deploy:
+
+- **bdd-tests** — executa a suíte com a API em memória, publica um resumo no job e o relatório como artefato `bdd-test-report-inmemory`;
+- **bdd-tests-docker** — sobe API + SQL Server com Docker Compose e executa a mesma suíte contra a stack real (artefato `bdd-test-report-docker`).
+
+
+## Evidências (Fase 7)
+
+Documentação completa, com os cenários Gherkin detalhados e as evidências: [`docs/EcoTracker_Fase7_Testes.pdf`](docs/EcoTracker_Fase7_Testes.pdf).
+
+Execução local com a API em memória (47/47) e relatório HTML do Reqnroll:
+
+![Execução local](docs/testes/shot_local.png)
+![Relatório Reqnroll](docs/testes/shot_report.png)
+
+Execução com Docker Compose contra a API em container + SQL Server:
+
+![Docker](docs/testes/shot_docker.png)
+
+Validação do contrato (o teste falha quando o schema não corresponde à resposta):
+
+![Contrato](docs/testes/shot_contract.png)
+
+GitHub Actions: os jobs BDD são pré-requisito para a imagem e o deploy:
+
+![CI](docs/testes/shot_ci.png)
+![CI logs](docs/testes/shot_ci_log.png)
 
 ---
 

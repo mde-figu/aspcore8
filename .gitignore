@@ -34,3 +34,9 @@ Thumbs.db
 
 ## Ambiente local
 .env
+
+## Resultados de testes
+TestResults/
+
+## Reqnroll (code-behind gerado no build)
+*.feature.cs

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ecotracker.esg/schemas/auth-token.schema.json",
+  "title": "Token JWT de autenticação",
+  "type": "object",
+  "properties": {
+    "token": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+$"
+    },
+    "expiration": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})?$"
+    },
+    "username": {
+      "type": "string",
+      "minLength": 1
+    },
+    "role": {
+      "enum": [
+        "Admin",
+        "Auditor",
+        "Viewer"
+      ]
+    }
+  },
+  "required": [
+    "token",
+    "expiration",
+    "username",
+    "role"
+  ],
+  "additionalProperties": false
+}
