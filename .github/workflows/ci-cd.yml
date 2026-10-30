@@ -47,9 +47,50 @@ jobs:
           name: test-results
           path: ./TestResults
 
+  bdd-tests:
+    name: Testes BDD e de contrato (API em memória)
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+      - name: Executar cenários Gherkin (Reqnroll)
+        run: ./scripts/run-bdd-tests.sh
+      - name: Publicar resumo dos testes
+        if: always()
+        run: |
+          python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import glob, xml.etree.ElementTree as ET
+          ns = {"t": "http://microsoft.com/schemas/VisualStudio/TeamTest/2010"}
+          for trx in glob.glob("tests/EcoTracker.BddTests/TestResults/*.trx"):
+              c = ET.parse(trx).find(".//t:Counters", ns).attrib
+              print(f"### Testes BDD (em memória)\n\n| Total | Aprovados | Falhas |\n|---|---|---|\n| {c['total']} | {c['passed']} | {c['failed']} |")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bdd-test-report-inmemory
+          path: tests/EcoTracker.BddTests/TestResults
+
+  bdd-tests-docker:
+    name: Testes BDD contra a stack Docker (API + SQL Server)
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Subir stack e executar testes BDD
+        run: ./scripts/run-bdd-tests-docker.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bdd-test-report-docker
+          path: TestResults
+
   docker:
     name: Build e push da imagem
-    needs: test
+    needs: [test, bdd-tests, bdd-tests-docker]
     runs-on: ubuntu-latest
     permissions:
       contents: read

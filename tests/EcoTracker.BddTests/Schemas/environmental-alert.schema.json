@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ecotracker.esg/schemas/environmental-alert.schema.json",
+  "title": "Alerta ambiental",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "companyName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "alertType": {
+      "type": "string",
+      "minLength": 1
+    },
+    "severity": {
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ]
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1
+    },
+    "relatedLicenseNumber": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "isResolved": {
+      "type": "boolean"
+    },
+    "resolvedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})?$"
+    },
+    "resolutionNotes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdAt": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})?$"
+    }
+  },
+  "required": [
+    "id",
+    "companyName",
+    "alertType",
+    "severity",
+    "message",
+    "relatedLicenseNumber",
+    "isResolved",
+    "resolvedAt",
+    "resolutionNotes",
+    "createdAt"
+  ],
+  "additionalProperties": false
+}

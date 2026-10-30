@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ecotracker.esg/schemas/error-message.schema.json",
+  "title": "Mensagem de erro (404 / 401 de login)",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "message"
+  ],
+  "additionalProperties": false
+}

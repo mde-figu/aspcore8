@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ecotracker.esg/schemas/compliance-audit.schema.json",
+  "title": "Auditoria de compliance",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "companyName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "auditorName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "normReference": {
+      "type": "string",
+      "minLength": 1
+    },
+    "auditDate": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})?$"
+    },
+    "result": {
+      "type": "string",
+      "minLength": 1
+    },
+    "complianceScore": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "findings": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "correctiveActions": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "nextAuditDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})?$"
+    },
+    "createdAt": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})?$"
+    }
+  },
+  "required": [
+    "id",
+    "companyName",
+    "auditorName",
+    "normReference",
+    "auditDate",
+    "result",
+    "complianceScore",
+    "findings",
+    "correctiveActions",
+    "nextAuditDate",
+    "createdAt"
+  ],
+  "additionalProperties": false
+}

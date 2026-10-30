@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ecotracker.esg/schemas/carbon-emission-page.schema.json",
+  "title": "Página de emissões",
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "carbon-emission.schema.json"
+      }
+    },
+    "page": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "pageSize": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "totalCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "totalPages": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "hasPrevious": {
+      "type": "boolean"
+    },
+    "hasNext": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "items",
+    "page",
+    "pageSize",
+    "totalCount",
+    "totalPages",
+    "hasPrevious",
+    "hasNext"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,19 @@
+# Execução dos testes BDD/API contra a stack real (API em container + SQL Server):
+#   docker compose -f docker-compose.yml -f docker-compose.tests.yml up --build --abort-on-container-exit --exit-code-from bdd-tests
+# Relatórios (HTML do Reqnroll + TRX) ficam em ./TestResults
+services:
+  bdd-tests:
+    build:
+      context: .
+      dockerfile: tests/EcoTracker.BddTests/Dockerfile
+    image: ecotracker-bdd-tests:local
+    container_name: ecotracker-bdd-tests
+    depends_on:
+      api:
+        condition: service_healthy
+    environment:
+      API_BASE_URL: http://api:8080
+    volumes:
+      - ./TestResults:/src/tests/EcoTracker.BddTests/TestResults
+    networks:
+      - ecotracker-net

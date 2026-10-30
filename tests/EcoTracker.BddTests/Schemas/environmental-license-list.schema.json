@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ecotracker.esg/schemas/environmental-license-list.schema.json",
+  "title": "Lista de licenças a vencer",
+  "type": "array",
+  "items": {
+    "$ref": "environmental-license.schema.json"
+  }
+}
